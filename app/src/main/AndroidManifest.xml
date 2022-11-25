@@ -22,15 +22,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".RandomBreweryScreenActivity"
-            android:exported="false"
-            android:label="@string/title_activity_random_brewery_screen"
-            android:theme="@style/Theme.OpenBreweryAPIActivity.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".BreweryScreenActivity"
             android:exported="false">
             <meta-data

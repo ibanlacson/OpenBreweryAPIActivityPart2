@@ -40,5 +40,7 @@ interface OpenBreweryAPI {
     // RANDOMIZE:
     //GET https://api.openbrewerydb.org/breweries/random
     @GET("/breweries/random")
-    suspend fun getRandomBreweryData():Response<OpenBreweryDB>
+    suspend fun getRandomBreweryData(
+        @Query("size") size:Int
+    ):Response<OpenBreweryDB>
 }

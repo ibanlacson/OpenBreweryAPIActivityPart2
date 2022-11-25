@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Color Scheme to use -->
+    <color name="muted_yellow">#EDCA45</color>
+    <color name="gold">#EAB740</color>
+    <color name="ocher">#CF9033</color>
+    <color name="medium_gray">#737373</color>
+    <color name="custom_black">#0D0D0D</color>
+
 </resources>
