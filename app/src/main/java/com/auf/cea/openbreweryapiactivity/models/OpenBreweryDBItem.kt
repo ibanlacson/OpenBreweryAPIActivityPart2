@@ -18,4 +18,4 @@ data class OpenBreweryDBItem(
     var street: String,
     var updated_at: String,
     var website_url: String
-)
+): java.io.Serializable
