@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             (R.id.btn_random_brewery) -> {
-                val intent = Intent(this,RandomBreweryScreen::class.java)
+                val intent = Intent(this,RandomBreweryActivity::class.java)
                 startActivity(intent)
             }
             (R.id.btn_search_brewery) -> {

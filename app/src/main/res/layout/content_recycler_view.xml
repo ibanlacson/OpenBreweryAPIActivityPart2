@@ -1,22 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/ll_card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        android:elevation="8dp"
-        android:padding="5dp">
+        app:cardElevation="5dp"
+        app:cardCornerRadius="13dp"
+        android:layout_margin="15dp"
+        app:cardBackgroundColor="#CF9033">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="15dp">
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/germania_one"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="The Brew Brothers/Eldorado Hotel and Casino"/>
+            <TextView
+                android:id="@+id/txt_brewery_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Brewpub"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/txt_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:text="\nLocation: 345 N Virginia St, Reno, Nevada, United States"/>
+            <TextView
+                android:id="@+id/txt_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:text="Phone: 7757865700"/>
+
+            <TextView
+                android:id="@+id/txt_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Website: http://www.eldoradoresorts.com"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>
