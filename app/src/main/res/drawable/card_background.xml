@@ -4,9 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:shape="rectangle">
 
-    <gradient
-        android:type="radial"
-        android:gradientRadius="300dp"
-        android:startColor="@color/ocher"
-        android:endColor="@color/muted_yellow"/>
+    <solid android:color="@color/white"/>
+    <corners android:radius="10dp"/>
 </shape>

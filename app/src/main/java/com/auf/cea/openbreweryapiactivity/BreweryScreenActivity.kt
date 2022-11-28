@@ -1,10 +1,12 @@
 package com.auf.cea.openbreweryapiactivity
 
-import android.app.ActivityManager.RecentTaskInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.auf.cea.openbreweryapiactivity.adapter.PaginatedBreweryAdapter
@@ -17,12 +19,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener {
+class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
+    AdapterView.OnItemSelectedListener {
     private lateinit var binding: ActivityBreweryScreenBinding
     private lateinit var breweryData: ArrayList<OpenBreweryDBItem>
     private lateinit var adapter : PaginatedBreweryAdapter
+    private var filterList = arrayOf("Nano","Micro","Brewpub","Regional")
     private var pageCounter = 0
     private var isLoading: Boolean = false
+    private var isChanged: Boolean = false
     private var filterValue = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,18 +46,25 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener {
 
         // Button Config
         binding.btnRefresh.setOnClickListener(this)
-        binding.rbtnBrewpub.setOnClickListener(this)
-        binding.rbtnMicro.setOnClickListener(this)
-        binding.rbtnNano.setOnClickListener(this)
-        binding.rbtnRegional.setOnClickListener(this)
+
+        // Spinner Configuration
+        val spinnerAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, filterList)
+        binding.spinnerFilter.adapter = spinnerAdapter
+        binding.spinnerFilter.onItemSelectedListener = this
+
 
         // OnScroll Listener
+        binding.llLoading.visibility = View.GONE
         binding.rvPaginated.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1) && (newState == RecyclerView.SCROLL_STATE_IDLE)) {
-                    isLoading = true
-
+                    // Reset the RecyclerView if the filter was changed
+                    if(!isLoading){
+                        isLoading = true
+                        whileLoading()
+                        binding.llLoading.visibility = View.VISIBLE
+                    }
                 }
             }
         })
@@ -60,15 +72,29 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getBreweries(filterValue:String){
         val breweryAPI = Retrofit.getInstance().create(OpenBreweryAPI::class.java)
+        Log.d(BreweryScreenActivity::class.java.simpleName,"the filter is: ${filterValue.lowercase()}")
         GlobalScope.launch(Dispatchers.IO) {
-            val result = breweryAPI.getBreweryData(filterValue,pageCounter, 5)
+            val result = breweryAPI.getBreweryData(filterValue.lowercase(),pageCounter, 5)
             val breweryDataResult = result.body()
-
             if (breweryDataResult != null){
-                breweryData.addAll(breweryDataResult)
+                when(isChanged) {
+                    (false) -> {
+                        breweryData.addAll(breweryDataResult)
+                        withContext(Dispatchers.Main){
+                            adapter.updateData(breweryDataResult)
+                        }
+                    }
+                    (true) -> {
+                        breweryData.clear()
+                        breweryData.addAll(breweryDataResult)
+                        withContext(Dispatchers.Main){
+                            adapter.resetRecyclerView(breweryDataResult)
+                        }
 
-                withContext(Dispatchers.Main){
-                    adapter.updateData(breweryDataResult)
+                        // Reset the flag and counter
+                        isChanged = false
+                        pageCounter = 1
+                    }
                 }
             }
         }
@@ -82,53 +108,31 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener {
                 isLoading = false
                 pageCounter++
                 getBreweries(filterValue)
+                binding.llLoading.visibility = View.GONE
             }
         }.start()
     }
 
     override fun onClick(p0: View?) {
         when(p0!!.id){
-
-            (R.id.rbtn_nano) -> {
-                with(binding){
-                    rbtnNano.isChecked = true
-                    rbtnRegional.isChecked = false
-                    rbtnBrewpub.isChecked = false
-                    rbtnMicro.isChecked = false
-                }
-                filterValue = "nano"
-            }
-            (R.id.rbtn_regional) -> {
-                with(binding){
-                    rbtnRegional.isChecked = true
-                    rbtnNano.isChecked = false
-                    rbtnBrewpub.isChecked = false
-                    rbtnMicro.isChecked = false
-                }
-                filterValue = "regional"
-            }
-            (R.id.rbtn_brewpub) -> {
-                with(binding){
-                    rbtnBrewpub.isChecked = true
-                    rbtnNano.isChecked = false
-                    rbtnRegional.isChecked = false
-                    rbtnMicro.isChecked = false
-                }
-                filterValue = "brewpub"
-            }
-            (R.id.rbtn_micro) -> {
-                with(binding){
-                    rbtnMicro.isChecked = true
-                    rbtnNano.isChecked = false
-                    rbtnRegional.isChecked = false
-                    rbtnBrewpub.isChecked = false
-                }
-                filterValue = "micro"
-            }
             (R.id.btn_refresh) -> {
                 getBreweries(filterValue)
                 //Show animation
             }
         }
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        // Check whether to reset the recyclerview or not
+        if (filterValue != filterList[p2]){
+            filterValue = filterList[p2]
+            Log.d(BreweryScreenActivity::class.java.simpleName,filterValue)
+            isChanged = true
+        } else {
+            isChanged = false
+        }
+    }
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
     }
 }

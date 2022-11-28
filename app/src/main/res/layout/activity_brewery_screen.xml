@@ -8,7 +8,7 @@
     android:background="@color/custom_black">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -17,86 +17,74 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/rbtn_group"
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
-                <RadioGroup
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <RadioButton
-                        android:id="@+id/rbtn_micro"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Micro"
-                        android:checked="true"
-                        android:textColor="@color/white" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Filter Results:"
+                    android:textColor="@color/white"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="10dp"
+                    android:textSize="18sp" />
 
-                    <RadioButton
-                        android:id="@+id/rbtn_nano"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Nano"
-                        android:textColor="@color/white" />
-                </RadioGroup>
+                <Spinner
+                    android:id="@+id/spinner_filter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/card_background"
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/btn_refresh"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rbtn_regional"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Regional"
-                    android:textColor="@color/white" />
-
-                <RadioButton
-                    android:id="@+id/rbtn_brewpub"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Brewpub"
-                    android:textColor="@color/white" />
-
-                </RadioGroup>
-
-            </LinearLayout>
+                android:backgroundTint="@color/ocher"
+                android:fontFamily="@font/germania_one"
+                android:text="Refresh List"
+                android:textSize="24sp"
+                app:cornerRadius="10dp" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_refresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/ocher"
-            android:fontFamily="@font/germania_one"
-            android:text="Refresh List"
-            android:textSize="24sp"
-            app:cornerRadius="10dp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_paginated"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/ll_loading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
+    <LinearLayout
+        android:id="@+id/ll_loading"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:lottie_autoPlay="true"
+            app:lottie_clipToCompositionBounds="true"
+            app:lottie_rawRes="@raw/beer_loading_edited"
+            android:paddingBottom="30dp"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
