@@ -4,36 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/custom_black">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:orientation="vertical"
+        android:padding="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/germania_one"
+            android:text="Brewery App Title"
+            android:textColor="#CF9033"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/germania_one"
+            android:text="Browse the largest verity of\nbeer in this app"
+            android:textColor="#737373"
+            android:textSize="15sp" />
+
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_button_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="78dp"
         android:orientation="vertical"
-        android:padding="15dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btn_search_brewery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search Brewery" />
+            android:text="Search Brewery"
+            android:layout_marginEnd="5dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="@color/ocher"
+            app:cornerRadius = "10dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/germania_one"/>
 
         <Button
             android:id="@+id/btn_brewery_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Brewery List" />
-
+            android:text="Brewery List"
+            android:adjustViewBounds="true"
+            android:backgroundTint="@color/ocher"
+            app:cornerRadius = "10dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/germania_one"/>
         <Button
             android:id="@+id/btn_random_brewery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Random Brewery" />
+            android:text="Random Brewery"
+            android:backgroundTint="@color/ocher"
+            app:cornerRadius = "10dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/germania_one"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ interface OpenBreweryAPI {
     @GET("/breweries")
     suspend fun getBreweryData(
         @Query("by_type") byType:String,
+        @Query("page") page: Int,
         @Query("per_page") perPage:Int
     ):Response<OpenBreweryDB>
 

@@ -12,7 +12,15 @@ import com.auf.cea.openbreweryapiactivity.services.helper.HelperClass.Companion.
 class BreweryAdapter(private var breweryList: ArrayList<OpenBreweryDBItem>, private var context: Context) : RecyclerView.Adapter<BreweryAdapter.BreweryViewHolder>() {
     inner class BreweryViewHolder(private val binding: ContentRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind (itemData: OpenBreweryDBItem){
-            val addressLine = concatLocation(itemData.street,itemData.address_2,itemData.address_3,itemData.city,itemData.state,itemData.county_province,itemData.country)
+            val addressLine = concatLocation(
+                itemData.street,
+                itemData.address_2,
+                itemData.address_3,
+                itemData.city,
+                itemData.state,
+                itemData.county_province,
+                itemData.country
+            )
             with(binding){
                 txtName.text = itemData.name
                 txtBreweryType.text = itemData.brewery_type
