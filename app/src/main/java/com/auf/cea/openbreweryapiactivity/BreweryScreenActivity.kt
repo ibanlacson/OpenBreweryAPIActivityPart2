@@ -92,9 +92,6 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
                             adapter.resetRecyclerView(breweryDataResult)
                         }
 
-                        // Reset the view
-                        showLoading()
-
                         // Reset the flag and counter
                         isChanged = false
                         pageCounter = 1

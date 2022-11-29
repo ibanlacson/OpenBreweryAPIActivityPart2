@@ -73,7 +73,7 @@
         app:lottie_loop="true"
         android:visibility="gone"
         app:lottie_cacheComposition="true"
-        app:lottie_url="https://assets10.lottiefiles.com/packages/lf20_dujyqkem.json" />
+        app:lottie_rawRes="@raw/cheers"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_paginated"

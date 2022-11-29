@@ -40,7 +40,7 @@ class HelperClass {
             val finalCountry = if (country == null) {
                 ""
             } else {
-                "$country, "
+                "$country"
             }
 
             return finalStreet + finalAdd2 + finalAdd3 + finalCity + finalState + finalProvince + finalCountry
