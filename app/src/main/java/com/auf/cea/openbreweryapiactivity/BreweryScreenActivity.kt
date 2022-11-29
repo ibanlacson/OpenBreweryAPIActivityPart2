@@ -112,12 +112,25 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
             }
         }.start()
     }
+    
+    private fun showLoading(){
+        binding.animationLoading.visibility = View.VISIBLE
+        binding.animationLoading.playAnimation()
+        object : CountDownTimer(3000,1000) {
+            override fun onTick(p0: Long) {
+            }
+            override fun onFinish() {
+                binding.animationLoading.visibility = View.GONE
+                binding.animationLoading.cancelAnimation()
+            }
+        }.start()
+    }
 
     override fun onClick(p0: View?) {
         when(p0!!.id){
             (R.id.btn_refresh) -> {
                 getBreweries(filterValue)
-                //Show animation
+                showLoading()
             }
         }
     }
@@ -133,6 +146,5 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
     override fun onNothingSelected(p0: AdapterView<*>?) {
-
     }
 }
