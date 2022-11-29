@@ -22,15 +22,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/germania_one"
-            android:text="Shot Puno?"
+            android:text="SHOT PUNO?"
             android:textColor="#CF9033"
-            android:textSize="50sp" />
+            android:textSize="45sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/germania_one"
-            android:text="Browse the largest verity of\nbeer in this app"
+            android:text="Browse the largest variety of\nbreweries in this app"
             android:textColor="#737373"
             android:textAlignment="center"
             android:textSize="20sp" />

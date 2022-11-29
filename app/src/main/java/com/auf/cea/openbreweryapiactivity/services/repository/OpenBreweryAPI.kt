@@ -15,28 +15,6 @@ interface OpenBreweryAPI {
         @Query("per_page") perPage:Int
     ):Response<OpenBreweryDB>
 
-    // PAGE:
-    // GET https://api.openbrewerydb.org/breweries?page=15&per_page=3
-    @GET("/breweries")
-    suspend fun getByPage(
-        @Query("page") byType:String,
-        @Query("per_page") perPage:Int
-    ):Response<OpenBreweryDB>
-
-    // PER PAGE:
-    // GET https://api.openbrewerydb.org/breweries?per_page=2
-    @GET("/breweries")
-    suspend fun getByPerPage(
-        @Query("per_page") perPage:Int
-    ):Response<OpenBreweryDB>
-
-    // SEARCH:
-    // GET https://api.openbrewerydb.org/breweries/search?query=dog&per_page=3
-    @GET("/breweries")
-    suspend fun getDataBySearch(
-        @Query("query") query:String,
-        @Query("per_page") perPage: Int
-    )
 
     // RANDOMIZE:
     //GET https://api.openbrewerydb.org/breweries/random
