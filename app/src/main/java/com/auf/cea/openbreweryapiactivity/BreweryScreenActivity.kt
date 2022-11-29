@@ -85,11 +85,15 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
                         }
                     }
                     (true) -> {
+
                         breweryData.clear()
                         breweryData.addAll(breweryDataResult)
                         withContext(Dispatchers.Main){
                             adapter.resetRecyclerView(breweryDataResult)
                         }
+
+                        // Reset the view
+                        showLoading()
 
                         // Reset the flag and counter
                         isChanged = false
@@ -116,11 +120,13 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
     private fun showLoading(){
         binding.animationLoading.visibility = View.VISIBLE
         binding.animationLoading.playAnimation()
+        binding.rvPaginated.visibility = View.GONE
         object : CountDownTimer(3000,1000) {
             override fun onTick(p0: Long) {
             }
             override fun onFinish() {
                 binding.animationLoading.visibility = View.GONE
+                binding.rvPaginated.visibility = View.VISIBLE
                 binding.animationLoading.cancelAnimation()
             }
         }.start()
