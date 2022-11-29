@@ -48,7 +48,7 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
         binding.btnRefresh.setOnClickListener(this)
 
         // Spinner Configuration
-        val spinnerAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, filterList)
+        val spinnerAdapter = ArrayAdapter(this,R.layout.spinner_content, filterList)
         binding.spinnerFilter.adapter = spinnerAdapter
         binding.spinnerFilter.onItemSelectedListener = this
 
@@ -72,30 +72,17 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun getBreweries(filterValue:String){
         val breweryAPI = Retrofit.getInstance().create(OpenBreweryAPI::class.java)
-        Log.d(BreweryScreenActivity::class.java.simpleName,"the filter is: ${filterValue.lowercase()}")
         GlobalScope.launch(Dispatchers.IO) {
             val result = breweryAPI.getBreweryData(filterValue.lowercase(),pageCounter, 5)
             val breweryDataResult = result.body()
             if (breweryDataResult != null){
-                when(isChanged) {
-                    (false) -> {
-                        breweryData.addAll(breweryDataResult)
-                        withContext(Dispatchers.Main){
-                            adapter.updateData(breweryDataResult)
-                        }
-                    }
-                    (true) -> {
-
-                        breweryData.clear()
-                        breweryData.addAll(breweryDataResult)
-                        withContext(Dispatchers.Main){
-                            adapter.resetRecyclerView(breweryDataResult)
-                        }
-
-                        // Reset the flag and counter
-                        isChanged = false
-                        pageCounter = 1
-                    }
+                breweryData.addAll(breweryDataResult)
+                withContext(Dispatchers.Main){
+                    adapter.updateData(breweryDataResult)
+                }
+                if (isChanged){
+                    isChanged = false
+                    pageCounter = 1
                 }
             }
         }
@@ -142,8 +129,15 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
         // Check whether to reset the recyclerview or not
         if (filterValue != filterList[p2]){
             filterValue = filterList[p2]
-            Log.d(BreweryScreenActivity::class.java.simpleName,filterValue)
             isChanged = true
+
+            // Reset View
+            GlobalScope.launch(Dispatchers.IO) {
+                withContext(Dispatchers.Main){
+                    breweryData.clear()
+                    adapter.resetView()
+                }
+            }
         } else {
             isChanged = false
         }

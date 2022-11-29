@@ -52,11 +52,9 @@ class PaginatedBreweryAdapter(private var breweryList: ArrayList<OpenBreweryDBIt
         this.notifyItemInserted(breweryList.size)
     }
 
-    fun resetRecyclerView(breweryDataList: ArrayList<OpenBreweryDBItem>){
+    fun resetView(){
+        this.breweryList.clear()
         this.breweryList = arrayListOf()
-        notifyDataSetChanged()
-        this.breweryList = breweryDataList
-        this.notifyItemInserted(this.breweryList.size)
-
+        this.notifyDataSetChanged()
     }
 }
