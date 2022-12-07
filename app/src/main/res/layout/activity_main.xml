@@ -87,6 +87,17 @@
             app:cornerRadius = "10dp"
             android:textSize="24sp"
             android:fontFamily="@font/germania_one"/>
+
+        <Button
+            android:id="@+id/btn_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Favorite List"
+            android:adjustViewBounds="true"
+            android:backgroundTint="@color/ocher"
+            app:cornerRadius = "10dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/germania_one"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

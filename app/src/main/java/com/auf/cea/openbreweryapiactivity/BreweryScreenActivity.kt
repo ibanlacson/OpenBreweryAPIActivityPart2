@@ -7,23 +7,28 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.auf.cea.openbreweryapiactivity.adapter.PaginatedBreweryAdapter
 import com.auf.cea.openbreweryapiactivity.databinding.ActivityBreweryScreenBinding
 import com.auf.cea.openbreweryapiactivity.models.OpenBreweryDBItem
+import com.auf.cea.openbreweryapiactivity.realm.config.RealmConfig
+import com.auf.cea.openbreweryapiactivity.realm.operations.BreweryOperations
 import com.auf.cea.openbreweryapiactivity.services.helper.Retrofit
 import com.auf.cea.openbreweryapiactivity.services.repository.OpenBreweryAPI
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import io.realm.RealmConfiguration
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
-    AdapterView.OnItemSelectedListener {
+    AdapterView.OnItemSelectedListener, PaginatedBreweryAdapter.PaginatedBreweryAdapterInterface {
     private lateinit var binding: ActivityBreweryScreenBinding
     private lateinit var breweryData: ArrayList<OpenBreweryDBItem>
     private lateinit var adapter : PaginatedBreweryAdapter
+    private lateinit var realmConfig: RealmConfiguration
+    private lateinit var getDbOperations: BreweryOperations
+    private lateinit var coroutineContext: CoroutineContext
     private var filterList = arrayOf("Nano","Micro","Brewpub","Regional")
     private var pageCounter = 0
     private var isLoading: Boolean = false
@@ -39,7 +44,7 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
         breweryData = arrayListOf()
 
         // Recycler View configuration
-        adapter = PaginatedBreweryAdapter(breweryData,this)
+        adapter = PaginatedBreweryAdapter(breweryData,this,this)
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
         binding.rvPaginated.adapter = adapter
         binding.rvPaginated.layoutManager = layoutManager
@@ -68,6 +73,11 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
                 }
             }
         })
+
+        // init
+        realmConfig = RealmConfig.getConfiguration()
+        getDbOperations = BreweryOperations(realmConfig)
+        coroutineContext = Job() + Dispatchers.IO
     }
 
     private fun getBreweries(filterValue:String){
@@ -144,4 +154,24 @@ class BreweryScreenActivity : AppCompatActivity(), View.OnClickListener,
     }
     override fun onNothingSelected(p0: AdapterView<*>?) {
     }
+
+    override fun removeFavorite(id: String) {
+        val scope = CoroutineScope(coroutineContext + CoroutineName("RemoveDBEntry"))
+        scope.launch (Dispatchers.IO) {
+            getDbOperations.removeBrewery(id)
+        }
+    }
+
+    override fun addToFav(id: String, name: String, type: String, location: String, website: String, phone: String, position: Int) {
+        val scope = CoroutineScope(coroutineContext + CoroutineName("AddToDatabase"))
+        scope.launch(Dispatchers.IO) {
+            getDbOperations.insertBrewery(id,name, type, location, phone, website)
+
+//            Hindi ito need -> causing dispatcher error (overload?)
+//            withContext(Dispatchers.Main){
+//                adapter.updateView(position) // No need to update the view
+//            }
+        }
+    }
+
 }

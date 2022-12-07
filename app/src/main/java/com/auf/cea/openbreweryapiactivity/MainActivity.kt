@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         with(binding){
             btnBreweryList.setOnClickListener(this@MainActivity)
             btnRandomBrewery.setOnClickListener(this@MainActivity)
+            btnFavorite.setOnClickListener(this@MainActivity)
         }
     }
 
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             (R.id.btn_random_brewery) -> {
                 val intent = Intent(this,RandomBreweryActivity::class.java)
+                startActivity(intent)
+            }
+            (R.id.btn_favorite) -> {
+                val intent = Intent(this, FavoriteListActivity::class.java)
                 startActivity(intent)
             }
         }

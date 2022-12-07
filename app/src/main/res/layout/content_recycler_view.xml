@@ -18,16 +18,33 @@
             android:orientation="vertical"
             android:padding="15dp"
             android:background="@drawable/rv_background">
-            <TextView
-                android:id="@+id/txt_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/germania_one"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="The Brew Brothers/Eldorado Hotel and Casino"/>
+                android:orientation="horizontal"
+                android:layout_weight="5"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/germania_one"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_weight="4.5"
+                    android:text="The Brew Brothers/Eldorado Hotel and Casino"/>
+
+                <ToggleButton
+                    android:id="@+id/toggle_favorite"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/toggle_selector" />
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/txt_brewery_type"
                 android:layout_width="wrap_content"
@@ -47,6 +64,8 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:text="\nLocation: 345 N Virginia St, Reno, Nevada, United States"/>
+
+
             <TextView
                 android:id="@+id/txt_phone"
                 android:layout_width="wrap_content"
